@@ -1,0 +1,5 @@
+google-api-python-client
+mechanicalsoup
+robobrowser
+html2text
+bs4
