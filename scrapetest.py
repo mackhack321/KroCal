@@ -15,5 +15,6 @@ loginform = br.find("form",{"class":"form-signin"})
 form = br.get_form(loginform)
 form["KSWUSER"] = username
 form["PWD"] = password
+br.session.headers["Referer"] = base_url
 br.submit_form(form)
 print(br.parsed)
