@@ -16,7 +16,9 @@ def getScheduleSoup(): # get bs4 object of schedule portal data
     userfield.send_keys(krousr)
     passfield.send_keys(kropass)
     passfield.send_keys(Keys.ENTER)
+    print("Entering credentials...")
     # check for existing session in progress
+    time.sleep(3)
     try: driver.find_element_by_id("btnContinue").click()
     except: pass
     # get to eschedule portal
@@ -25,7 +27,12 @@ def getScheduleSoup(): # get bs4 object of schedule portal data
     driver.find_element_by_id("selfServ").click()
     # make soup out of page html
     html = driver.page_source
-    soup = BeautifulSoup(html)
+    print("Generating soup...")
+    soup = BeautifulSoup(html,features="lxml")
+    tempfile = open("tempsoup.txt","w")
+    print("Writing soup to temp file...")
+    tempfile.write(str(soup))
+    tempfile.close()
     return soup
 
 if __name__ == "__main__": getScheduleSoup()
