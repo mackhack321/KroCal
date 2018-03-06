@@ -8,7 +8,7 @@ def getScheduleSoup(): # get bs4 object of schedule portal data
     krousr = jsondata["login"]
     kropass = jsondata["pass"]
     # init browser, open website, find login field
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome("/home/mack/Desktop/KroCal/chromedriver")
     driver.get("http://greatpeople.me")
     userfield = driver.find_element_by_id("KSWUSER")
     passfield = driver.find_element_by_id("PWD")
