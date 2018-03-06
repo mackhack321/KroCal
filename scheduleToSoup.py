@@ -29,10 +29,6 @@ def getScheduleSoup(): # get bs4 object of schedule portal data
     html = driver.page_source
     print("Generating soup...")
     soup = BeautifulSoup(html,features="lxml")
-    tempfile = open("tempsoup.txt","w")
-    print("Writing soup to temp file...")
-    tempfile.write(str(soup))
-    tempfile.close()
     return soup
 
 if __name__ == "__main__": getScheduleSoup()

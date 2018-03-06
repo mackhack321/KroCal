@@ -9,6 +9,9 @@ from oauth2client.file import Storage
 
 import datetime
 
+import scheduleSoupToJSON as soupJSON
+import JSONtoDatetime as JSONdt
+
 try:
     import argparse
     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
@@ -17,7 +20,7 @@ except ImportError:
 
 SCOPES = 'https://www.googleapis.com/auth/calendar'
 CLIENT_SECRET_FILE = 'client_id.json'
-APPLICATION_NAME = 'Google Calendar API Python Quickstart'
+APPLICATION_NAME = 'KroCal'
 
 def get_credentials():
     """Gets valid user credentials from storage.
@@ -52,16 +55,22 @@ def main():
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     service = discovery.build("calendar","v3",http=http)
-    myEvent = {
-        "summary":"Work",
-        "start":{
-            "dateTime":"2018-03-09T15:30:00-06:00","timeZone":"America/Chicago",
-        },
-        "end":{
-        "dateTime":"2018-03-09T19:30:00-06:00","timeZone":"America/Chicago"
+
+    soupJSON.makeJSON() # scrape sched, make soup, dump to json
+    datesdict = JSONdt.schedJSONToDT("hours.json") # format json and turn it into a dict
+    for key in datesdict.keys():
+        print(f"Start: {key}, End: {datesdict[key]}")
+        myEvent = {
+            "summary":"Work",
+            "start":{
+                "dateTime":f"{key}","timeZone":"America/Chicago",
+            },
+            "end":{
+            "dateTime":f"{datesdict[key]}","timeZone":"America/Chicago"
+            }
         }
-    }
-    event = service.events().insert(calendarId="primary",body=myEvent).execute()
+        event = service.events().insert(calendarId="primary",body=myEvent).execute()
+    os.remove("hours.json") # delete the json file
     print("Done!")
 
 if __name__ == "__main__": main()
