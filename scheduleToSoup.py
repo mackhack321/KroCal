@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 import json
 import time
 from bs4 import BeautifulSoup
@@ -8,7 +9,10 @@ def getScheduleSoup(): # get bs4 object of schedule portal data
     krousr = jsondata["login"]
     kropass = jsondata["pass"]
     # init browser, open website, find login field
-    driver = webdriver.Chrome()
+    chrome_ops = Options()
+    chrome_ops.add_argument("--headless")
+    chrome_ops.add_argument("--disable-gpu")
+    driver = webdriver.Chrome("/home/mack/Desktop/KroCal/chromedriver",chrome_options=chrome_ops)
     driver.get("http://greatpeople.me")
     userfield = driver.find_element_by_id("KSWUSER")
     passfield = driver.find_element_by_id("PWD")
