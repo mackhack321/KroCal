@@ -12,7 +12,7 @@ def getScheduleSoup(): # get bs4 object of schedule portal data
     chrome_ops = Options()
     chrome_ops.add_argument("--headless")
     chrome_ops.add_argument("--disable-gpu")
-    driver = webdriver.Chrome("/home/mack/Desktop/KroCal/chromedriver",chrome_options=chrome_ops)
+    driver = webdriver.Chrome("chromedriver.exe",chrome_options=chrome_ops)
     driver.get("http://greatpeople.me")
     userfield = driver.find_element_by_id("KSWUSER")
     passfield = driver.find_element_by_id("PWD")
