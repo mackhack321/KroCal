@@ -56,7 +56,7 @@ def main():
     http = credentials.authorize(httplib2.Http())
     service = discovery.build("calendar","v3",http=http)
 
-    soupJSON.makeJSON() # scrape sched, make soup, dump to json
+    soupJSON.makeJSON(args = "--latest") # scrape sched, make soup, dump to json
     datesdict = JSONdt.schedJSONToDT("hours.json") # format json and turn it into a dict
     for key in datesdict.keys():
         print(f"Start: {key}, End: {datesdict[key]}")
